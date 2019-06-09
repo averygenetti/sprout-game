@@ -1,0 +1,168 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://FoodMeter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://PlayerWater.tscn" type="PackedScene" id=2]
+[ext_resource path="res://SpecialFood.gd" type="Script" id=3]
+[ext_resource path="res://fruit_2.png" type="Texture" id=4]
+[ext_resource path="res://stroke_font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Days.gd" type="Script" id=6]
+[ext_resource path="res://Seeds.gd" type="Script" id=7]
+[ext_resource path="res://seed.png" type="Texture" id=8]
+[ext_resource path="res://Control Hint.gd" type="Script" id=9]
+[ext_resource path="res://rain.png" type="Texture" id=10]
+[ext_resource path="res://Blanker.gd" type="Script" id=11]
+[ext_resource path="res://WeatherOverlay.gd" type="Script" id=12]
+[ext_resource path="res://Win.gd" type="Script" id=13]
+[ext_resource path="res://small_pixel.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://Lose.gd" type="Script" id=15]
+[ext_resource path="res://bgm.wav" type="AudioStream" id=16]
+[ext_resource path="res://rain-street-06.wav" type="AudioStream" id=17]
+[ext_resource path="res://Forecast.gd" type="Script" id=18]
+[ext_resource path="res://sunny.png" type="Texture" id=19]
+[ext_resource path="res://rainhy.png" type="Texture" id=20]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "New Anim",
+"speed": 5.0
+} ]
+
+[sub_resource type="DynamicFont" id=5]
+outline_size = 2
+outline_color = Color( 0.0431373, 0.219608, 0.321569, 1 )
+font_data = ExtResource( 14 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 19 ), ExtResource( 20 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="UI" type="Node2D"]
+z_index = 10
+
+[node name="FoodMeter" parent="." instance=ExtResource( 1 )]
+position = Vector2( 85, 190 )
+
+[node name="PlayerWater" parent="." instance=ExtResource( 2 )]
+position = Vector2( 75, 190 )
+
+[node name="SpecialFood" type="Node2D" parent="."]
+position = Vector2( 4, 6 )
+script = ExtResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="SpecialFood"]
+position = Vector2( 125, 188 )
+frames = SubResource( 1 )
+
+[node name="Days" type="Label" parent="."]
+margin_left = 2.0
+margin_top = 191.0
+margin_right = 42.0
+margin_bottom = 205.0
+custom_fonts/font = ExtResource( 5 )
+script = ExtResource( 6 )
+
+[node name="Seeds" type="Node2D" parent="."]
+position = Vector2( 60, 190 )
+
+[node name="Number of Seeds" type="Label" parent="Seeds"]
+margin_top = 1.0
+margin_right = 40.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 5 )
+script = ExtResource( 7 )
+
+[node name="Seed Icon" type="Sprite" parent="Seeds"]
+position = Vector2( 10, 4 )
+texture = ExtResource( 8 )
+
+[node name="Control Hint" type="Label" parent="."]
+margin_left = 2.0
+margin_top = 180.0
+margin_right = 42.0
+margin_bottom = 194.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 9 )
+
+[node name="Blanker" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 100, 100 )
+z_index = 10
+frames = SubResource( 3 )
+animation = "New Anim"
+script = ExtResource( 11 )
+
+[node name="WeatherOverlay" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 100, 100 )
+z_index = 10
+frames = SubResource( 3 )
+animation = "New Anim"
+script = ExtResource( 12 )
+
+[node name="Win" type="Node2D" parent="."]
+position = Vector2( 66, -16 )
+script = ExtResource( 13 )
+
+[node name="WinLabel" type="Label" parent="Win"]
+margin_left = -4.0
+margin_right = 82.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 5 )
+text = "Success!"
+
+[node name="Lose" type="Node2D" parent="."]
+position = Vector2( 66, -16 )
+script = ExtResource( 15 )
+
+[node name="LoseLabel" type="Label" parent="Lose"]
+margin_left = 2.0
+margin_right = 88.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 5 )
+text = "Failure!"
+
+[node name="bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+autoplay = true
+
+[node name="rain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 17 )
+
+[node name="Forecast" type="Node2D" parent="."]
+script = ExtResource( 18 )
+
+[node name="Day1" type="AnimatedSprite" parent="Forecast"]
+modulate = Color( 1, 0.552941, 0.419608, 1 )
+position = Vector2( 154, 194 )
+frames = SubResource( 4 )
+
+[node name="Day2" type="AnimatedSprite" parent="Forecast"]
+position = Vector2( 164, 194 )
+frames = SubResource( 4 )
+
+[node name="Day3" type="AnimatedSprite" parent="Forecast"]
+position = Vector2( 174, 194 )
+frames = SubResource( 4 )
+
+[node name="Day4" type="AnimatedSprite" parent="Forecast"]
+position = Vector2( 184, 194 )
+frames = SubResource( 4 )
+
+[node name="Day5" type="AnimatedSprite" parent="Forecast"]
+position = Vector2( 194, 194 )
+frames = SubResource( 4 )
